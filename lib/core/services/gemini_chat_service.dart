@@ -1,44 +1,29 @@
 import 'package:aichatbot/core/services/api_client.dart';
-import 'package:aichatbot/feature/chat/models/chat_message_model.dart';
+import 'package:aichatbot/feature/chat/models/chat_message.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GeminiChatService {
-  final ApiClient _apiClient;
-  final String _apiKey;
-
-  GeminiChatService({
-    required ApiClient apiClient,
-    required String apiKey,
-  })  : _apiClient = apiClient,
-        _apiKey = apiKey;
+  final _apiClient = ApiClient();
+  static const _url =
+      'https://generativelanguage.googleapis.com/v1beta/interactions';
+  static const _model = 'gemini-3.6-flash';
 
   Future<ChatMessageModel> sendMessage(List<ChatMessageModel> messages) async {
-    const url = 'https://generativelanguage.googleapis.com/v1beta/interactions';
-
-    final body = {
-      'model': 'gemini-3.6-flash',
-      'contents': messages.map((m) => m.toJson()).toList(),
-    };
-
-    final headers = {
-      'x-goog-api-key': _apiKey,
-      'Content-Type': 'application/json',
-    };
-
+    final requestBody = messages.map((message) => message.toJson()).toList();
     final response = await _apiClient.post(
-      url,
-      body: body,
-      headers: headers,
+      _url,
+      body: {
+        'model': _model,
+        'contents': requestBody
+      },
+      headers: {
+        'x-goog-api-key': dotenv.env['GEMINI_API_KEY']!,
+        'Content-Type': 'application/json',
+      },
     );
 
-    final candidates = response['candidates'] as List<dynamic>?;
-    if (candidates != null && candidates.isNotEmpty) {
-      final candidate = candidates[0] as Map<String, dynamic>;
-      final content = candidate['content'] as Map<String, dynamic>?;
-      if (content != null) {
-        return ChatMessageModel.fromJson(content);
-      }
-    }
+   final data =response.data;
 
-    throw Exception('Failed to get a valid response from Gemini API');
+    return ChatMessageModel.fromJson(data);
   }
 }
