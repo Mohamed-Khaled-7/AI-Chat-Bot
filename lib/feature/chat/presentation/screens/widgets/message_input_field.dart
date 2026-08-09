@@ -29,6 +29,7 @@ class _MessageInputFieldState extends State<MessageInputField> {
     widget.message.add(ChatMessageModel.user(text));
     _controller.clear();
     context.read<SendMessageCubit>().sendMessage(widget.message);
+    print(widget.message);
   }
 
   @override

@@ -5,7 +5,7 @@ class ApiClient {
 
   ApiClient({Dio? dio}) : _dio = dio ?? Dio();
 
-  Future<Response<T>> post<T>(
+  Future<Map<String ,dynamic>> post(
     String url, {
     required dynamic body,
     Map<String, String>? headers,

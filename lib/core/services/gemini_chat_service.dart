@@ -1,11 +1,13 @@
+import 'package:aichatbot/core/const/const.dart';
 import 'package:aichatbot/core/services/api_client.dart';
 import 'package:aichatbot/feature/chat/models/chat_message.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GeminiChatService {
-  final _apiClient = ApiClient();
-  static const _url =
-      'https://generativelanguage.googleapis.com/v1beta/interactions';
+  final _apiClient = ApiClient(dio: Dio());
+  static final  _url =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=$apiKey';
   static const _model = 'gemini-3.6-flash';
 
   Future<ChatMessageModel> sendMessage(List<ChatMessageModel> messages) async {
@@ -22,8 +24,7 @@ class GeminiChatService {
       },
     );
 
-   final data =response.data;
 
-    return ChatMessageModel.fromJson(data);
+    return ChatMessageModel.fromJson(response);
   }
 }
