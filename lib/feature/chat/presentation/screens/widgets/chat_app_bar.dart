@@ -1,3 +1,4 @@
+import 'package:aichatbot/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -7,49 +8,34 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back, color: AppColors.black),
         onPressed: () {},
       ),
       title: Row(
         children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.smart_toy_outlined,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 12),
+          const Icon(Icons.smart_toy, color: AppColors.iconColor, size: 32),
+          const SizedBox(width: 8),
           const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'ChatGPT',
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  color: AppColors.titleColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 3,
-                    backgroundColor: Colors.green,
-                  ),
+                  CircleAvatar(radius: 3, backgroundColor: AppColors.green),
                   SizedBox(width: 6),
                   Text(
                     'Online',
                     style: TextStyle(
-                      color: Colors.green,
+                      color: AppColors.green,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
@@ -62,11 +48,11 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.volume_up_outlined, color: Colors.black),
+          icon: const Icon(Icons.volume_up_outlined, color: AppColors.black),
           onPressed: () {},
         ),
         IconButton(
-          icon: const Icon(Icons.download_outlined, color: Colors.black),
+          icon: const Icon(Icons.ios_share, color: AppColors.black),
           onPressed: () {},
         ),
       ],

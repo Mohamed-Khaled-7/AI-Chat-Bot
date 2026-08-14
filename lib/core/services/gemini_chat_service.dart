@@ -1,12 +1,13 @@
 import 'package:aichatbot/core/const/const.dart';
 import 'package:aichatbot/core/services/api_client.dart';
 import 'package:aichatbot/feature/chat/models/chat_message.dart';
+import 'package:aichatbot/feature/chat/models/message.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GeminiChatService {
   final _apiClient = ApiClient(dio: Dio());
-  static final  _url =
+  static final _url =
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=$apiKey';
   static const _model = 'gemini-3.6-flash';
 
@@ -14,17 +15,13 @@ class GeminiChatService {
     final requestBody = messages.map((message) => message.toJson()).toList();
     final response = await _apiClient.post(
       _url,
-      body: {
-        'model': _model,
-        'contents': requestBody
-      },
+      body: {'model': _model, 'contents': requestBody},
       headers: {
         'x-goog-api-key': dotenv.env['GEMINI_API_KEY']!,
         'Content-Type': 'application/json',
       },
     );
-
-
-    return ChatMessageModel.fromJson(response);
+    final geminiResponse = GeminiResponseModel.fromJson(response);
+    return geminiResponse.candidates.first.content;
   }
 }

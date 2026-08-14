@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 class AppTextStyles {
   AppTextStyles._();
@@ -12,7 +12,10 @@ class AppTextStyles {
     bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
   );
 
-  static TextStyle get appBarTitle => textTheme.titleLarge!.copyWith(color: const Color(0xFF0B1223));
-  static TextStyle get messageBody => textTheme.bodyLarge!.copyWith(color: const Color(0xFF0B1223));
-  static TextStyle get messageSecondary => textTheme.bodyMedium!.copyWith(color: const Color(0xFF6B7280));
+  static TextStyle get appBarTitle =>
+      textTheme.titleLarge!.copyWith(color: AppColors.textPrimary);
+  static TextStyle get messageBody =>
+      textTheme.bodyLarge!.copyWith(color: AppColors.textPrimary);
+  static TextStyle get messageSecondary =>
+      textTheme.bodyMedium!.copyWith(color: AppColors.textSecondary);
 }

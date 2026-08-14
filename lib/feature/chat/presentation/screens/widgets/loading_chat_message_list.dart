@@ -1,16 +1,15 @@
+import 'package:aichatbot/feature/chat/models/chat_message.dart';
+import 'package:aichatbot/feature/chat/presentation/screens/widgets/chat_loading_bubble.dart';
 import 'package:aichatbot/feature/chat/presentation/screens/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:aichatbot/feature/chat/models/chat_message.dart';
 
-class ChatMessagesList extends StatelessWidget {
-  final List<ChatMessageModel> messages;
+class LoadingChatMessageList extends StatelessWidget {
   final ScrollController scrollController;
-
-  const ChatMessagesList({
+  final List<ChatMessageModel> messages;
+  const LoadingChatMessageList({
     super.key,
-
-    required this.messages,
     required this.scrollController,
+    required this.messages,
   });
 
   @override
@@ -19,9 +18,12 @@ class ChatMessagesList extends StatelessWidget {
       reverse: true,
       controller: scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      itemCount: messages.length,
+      itemCount: messages.length + 1,
       itemBuilder: (context, index) {
-        final message = messages[messages.length - 1 - index];
+        if (index == 0) {
+          return ChatLoadingBubble();
+        }
+        final message = messages[messages.length - index];
         final isUserMessage = message.role == 'user';
         return MessageBubble(
           text: message.parts.first.text,

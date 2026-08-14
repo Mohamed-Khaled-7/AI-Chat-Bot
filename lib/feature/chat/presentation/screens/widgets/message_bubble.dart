@@ -1,8 +1,10 @@
+import 'package:aichatbot/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
   final String text;
   final bool isUserMessage;
+  
 
   const MessageBubble({
     super.key,
@@ -13,29 +15,29 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isUserMessage) {
-      return _buildUserMessage(context);
+      return _buildUserMessage();
     } else {
-      return _buildBotMessage(context);
+      return _buildBotMessage();
     }
   }
 
-  Widget _buildUserMessage(BuildContext context) {
+  Widget _buildUserMessage() {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
+        constraints: const BoxConstraints(
+          maxWidth: 300,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: AppColors.userBubble,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           text,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -44,43 +46,37 @@ class MessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildBotMessage(BuildContext context) {
-    return Row(
+  Widget _buildBotMessage() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 28,
-          height: 28,
-          margin: const EdgeInsets.only(right: 12, top: 4),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: const Icon(
-            Icons.smart_toy_outlined,
-            color: Colors.white,
-            size: 16,
-          ),
-        ),
-        Expanded(
+        Align(
+          alignment: Alignment.centerLeft,
           child: Container(
-            margin: const EdgeInsets.only(bottom: 12),
+            constraints: const BoxConstraints(
+              maxWidth: 300,
+            ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
+              color: AppColors.assistantBubble,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
               text,
               style: const TextStyle(
-                color: Color(0xFF999999),
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
+                color: AppColors.textMuted,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 2, bottom: 12, left: 2),
+          child: Icon(Icons.smart_toy, color: AppColors.iconColor, size: 18),
         ),
       ],
     );
   }
 }
+
