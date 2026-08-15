@@ -24,7 +24,6 @@
 ## 📑 Table of Contents
 
 - [Features](#-features)
-- [Screenshots](#-screenshots)
 - [Tech Stack](#️-tech-stack)
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
@@ -52,16 +51,6 @@
 - ⏳ Dedicated UI states for loading and failure (with retry-friendly bubbles)
 - 🎨 Custom design system — colors, spacing, radius, shadows, and typography (Google Fonts)
 - 📱 Multi-platform: Android, iOS, Web, Windows, macOS
-
----
-
-## 📸 Screenshots
-
-<div align="center">
-  <img src="assets/home1.png" width="45%" alt="Chat screen 1" />
-  &nbsp;&nbsp;
-  <img src="assets/home2.png" width="45%" alt="Chat screen 2" />
-</div>
 
 ---
 
