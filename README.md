@@ -202,5 +202,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <div align="center">
-Made with ❤️ using Flutter
+Made by <a href="https://www.linkedin.com/in/mohamed-khaled-902623357/">Mohamed Khaled</a> using Flutter
 </div>
