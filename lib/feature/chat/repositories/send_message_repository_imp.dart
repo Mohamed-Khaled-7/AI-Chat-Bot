@@ -9,7 +9,10 @@ class SendMessageRepositoryimpl implements SendMessageRepository {
     : _service = service;
 
   @override
-  Future<ChatMessageModel> sendMessage( List<ChatMessageModel> messages) async {
+  Future<ChatMessageModel> sendMessage(List<ChatMessageModel> messages) async {
+    if (messages.length > 20) {
+      messages = messages.sublist(messages.length - 5);
+    }
     return await _service.sendMessage(messages);
   }
 }

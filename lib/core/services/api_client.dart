@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class ApiClient {
   final Dio _dio;
 
-  ApiClient({Dio? dio}) : _dio = dio ?? Dio();
+  ApiClient({required Dio dio}) : _dio = dio;
 
   Future<Map<String ,dynamic>> post(
     String url, {

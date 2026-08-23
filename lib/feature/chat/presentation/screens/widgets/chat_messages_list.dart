@@ -15,19 +15,28 @@ class ChatMessagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      reverse: true,
-      controller: scrollController,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        final message = messages[messages.length - 1 - index];
-        final isUserMessage = message.role == 'user';
-        return MessageBubble(
-          text: message.parts.first.text,
-          isUserMessage: isUserMessage,
-        );
-      },
-    );
+    if (messages.isEmpty) {
+      return const Center(
+        child: Text(
+          'No messages yet. Start the conversation!',
+          style: TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+      );
+    } else {
+      return ListView.builder(
+        reverse: true,
+        controller: scrollController,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        itemCount: messages.length,
+        itemBuilder: (context, index) {
+          final message = messages[messages.length - 1 - index];
+          final isUserMessage = message.role == 'user';
+          return MessageBubble(
+            text: message.parts.first.text,
+            isUserMessage: isUserMessage,
+          );
+        },
+      );
+    }
   }
 }
