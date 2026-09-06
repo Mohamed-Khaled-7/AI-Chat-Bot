@@ -15,7 +15,6 @@ class ApiClient {
       data: body,
       options: Options(headers: headers),
     );
-
     return response.data ?? {};
   }
 }

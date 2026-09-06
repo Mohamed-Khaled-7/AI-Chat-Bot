@@ -10,9 +10,16 @@ class SendMessageRepositoryimpl implements SendMessageRepository {
 
   @override
   Future<ChatMessageModel> sendMessage(List<ChatMessageModel> messages) async {
+    messages = applyChatMesaageHistoryPolicy(messages);
+    return await _service.sendMessage(messages);
+  }
+
+  List<ChatMessageModel> applyChatMesaageHistoryPolicy(
+    List<ChatMessageModel> messages,
+  ) {
     if (messages.length > 20) {
       messages = messages.sublist(messages.length - 5);
     }
-    return await _service.sendMessage(messages);
+    return messages;
   }
 }

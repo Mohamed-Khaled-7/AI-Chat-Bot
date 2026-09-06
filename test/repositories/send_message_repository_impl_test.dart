@@ -26,9 +26,6 @@ void main() {
     test(
       "message length doesn't change if length is less than or equal to 20",
       () async {
-        when(
-          () => mockGeminiChatService.sendMessage(captureAny()),
-        ).thenAnswer((_) async => _getMessageModel);
         List<ChatMessageModel> messages = List.generate(
           20,
           (index) => ChatMessageModel(
@@ -36,13 +33,8 @@ void main() {
             role: 'user',
           ),
         );
-        var result = await sendMessageRepositoryimpl.sendMessage(messages);
-        var newlenth =
-            verify(
-                  () => mockGeminiChatService.sendMessage(captureAny()),
-                ).captured.first
-                as List<ChatMessageModel>;
-        expect(newlenth.length, equals(messages.length));
+        var result =  sendMessageRepositoryimpl.applyChatMesaageHistoryPolicy(messages);
+        expect(result.length, equals(messages.length));
       },
     );
     test("message length changes if length is greater than 20", () async {
@@ -56,7 +48,7 @@ void main() {
           role: 'user',
         ),
       );
-      var result = await sendMessageRepositoryimpl.sendMessage(messages);
+      await sendMessageRepositoryimpl.sendMessage(messages);
       var newlenth =
           verify(
                 () => mockGeminiChatService.sendMessage(captureAny()),
@@ -65,4 +57,5 @@ void main() {
       expect(newlenth.length, equals(5));
     });
   });
+  
 }

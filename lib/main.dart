@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => gitIt<SendMessageCubit>(),
-      child: MaterialApp.router(
+    return MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'AI Chat Bot',
         theme: ThemeData(
@@ -30,7 +28,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         routerConfig: AppRoutes.routes,
-      ),
-    );
+      );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:aichatbot/core/theme/app_colors.dart';
+import 'package:aichatbot/core/utils/get_it.dart';
 import 'package:aichatbot/feature/chat/models/chat_message.dart';
 import 'package:aichatbot/feature/chat/presentation/cubit/send_message_cubit.dart';
-import 'package:aichatbot/feature/chat/presentation/cubit/send_message_state.dart';
 import 'package:aichatbot/feature/chat/presentation/screens/widgets/chat_app_bar.dart';
-import 'package:aichatbot/feature/chat/presentation/screens/widgets/chat_messages_list.dart';
-import 'package:aichatbot/feature/chat/presentation/screens/widgets/failure_chat_message_list.dart';
-import 'package:aichatbot/feature/chat/presentation/screens/widgets/loading_chat_message_list.dart';
-import 'package:aichatbot/feature/chat/presentation/screens/widgets/message_input_field.dart';
+import 'package:aichatbot/feature/chat/presentation/screens/widgets/chat_bloc_consumer.dart';
+import 'package:aichatbot/feature/chat/presentation/screens/widgets/chat_input_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +17,7 @@ class ChatViewBody extends StatefulWidget {
 
 class _ChatViewBodyState extends State<ChatViewBody> {
   final ScrollController scrollController = ScrollController();
+
   final List<ChatMessageModel> messages = [];
 
   @override
@@ -36,38 +35,16 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         child: Column(
           children: [
             Expanded(
-              child: BlocConsumer<SendMessageCubit, SendMessageState>(
-                listener: (context, state) {
-                  if (state is SendMessageSuccess) {
-                    messages.add(state.message);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is SendMessageFailure) {
-                    return FailureChatMessageList(
-                      errMessage: state.error,
-                      onRetry: () {
-                        context.read<SendMessageCubit>().sendMessage(messages);
-                      },
-                      scrollController: scrollController,
-                      messages: messages,
-                    );
-                  }
-                  if (state is SendMessageLoading) {
-                    return LoadingChatMessageList(
-                      scrollController: scrollController,
-                      messages: messages,
-                    );
-                  }
-                  return ChatMessagesList(
-                    messages: messages,
-                    scrollController: scrollController,
-                  );
-                },
+              child: BlocProvider(
+                create: (context) => gitIt<SendMessageCubit>(),
+                child: ChatBlocConsumer(
+                  messages: messages,
+                  scrollController: scrollController,
+                ),
               ),
             ),
-            MessageInputField(
-              message: messages,
+            ChatInputBar(
+              messages: messages,
               scrollController: scrollController,
             ),
           ],

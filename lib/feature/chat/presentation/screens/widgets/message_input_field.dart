@@ -2,14 +2,15 @@ import 'package:aichatbot/core/theme/app_colors.dart';
 import 'package:aichatbot/feature/chat/models/chat_message.dart';
 import 'package:aichatbot/feature/chat/presentation/cubit/send_message_cubit.dart';
 import 'package:aichatbot/feature/chat/presentation/cubit/send_message_state.dart';
-import 'package:aichatbot/feature/chat/presentation/screens/widgets/failure_chat_message_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessageInputField extends StatefulWidget {
   List<ChatMessageModel> message;
+  final bool isLoading;
   final ScrollController scrollController;
   MessageInputField({
+    required this.isLoading,
     required this.message,
     super.key,
     required this.scrollController,
@@ -54,6 +55,8 @@ class _MessageInputFieldState extends State<MessageInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final isArabic = locale.languageCode == 'ar';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -70,8 +73,9 @@ class _MessageInputFieldState extends State<MessageInputField> {
           children: [
             Expanded(
               child: TextField(
-                textDirection: TextDirection.rtl,
-
+                key: Key('chat_input_bar'),
+                enabled: !widget.isLoading,
+                textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: _controller,

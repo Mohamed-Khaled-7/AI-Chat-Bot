@@ -4,18 +4,20 @@ import 'package:aichatbot/feature/chat/presentation/cubit/send_message_cubit.dar
 import 'package:aichatbot/feature/chat/repositories/send_message_repository.dart';
 import 'package:aichatbot/feature/chat/repositories/send_message_repository_imp.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
 final gitIt = GetIt.instance;
 
 void setup() {
-  gitIt.registerLazySingleton<Dio>(() => Dio());
-  gitIt.registerLazySingleton<ApiClient>(() => ApiClient(dio: gitIt()));
-  gitIt.registerLazySingleton<GeminiChatService>(
-    () => GeminiChatService(apiClient: gitIt()),
+  
+  gitIt.registerSingleton<Dio>(Dio());
+  gitIt.registerSingleton<ApiClient>( ApiClient(dio: gitIt()));
+  gitIt.registerSingleton<GeminiChatService>(
+    GeminiChatService(apiClient: gitIt(),api:dotenv.env['GEMINI_API_KEY'] ),
   );
-  gitIt.registerLazySingleton<SendMessageRepository>(
-    () => (SendMessageRepositoryimpl(service: gitIt())),
+  gitIt.registerSingleton<SendMessageRepository>(
+   (SendMessageRepositoryimpl(service: gitIt())),
   );
   gitIt.registerFactory<SendMessageCubit>(
     () => SendMessageCubit(repository: gitIt()),
